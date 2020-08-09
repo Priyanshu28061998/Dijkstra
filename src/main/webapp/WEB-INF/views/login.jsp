@@ -8,10 +8,9 @@
 		Number of Edges : <input type="text" name="m"/>
 		Enter Edges : <input type="text" name="edges"/>
 		Source Node : <input type="text" name="s"/>
-		Target Node : <input type="text" name="t"/>
 		<input type="submit" />
 	</form>
  <h1>${ans}</h1>
- <h1>Path:${show}</h1>
+ 
 </body>
 </html>

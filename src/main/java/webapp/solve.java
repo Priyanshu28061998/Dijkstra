@@ -46,7 +46,6 @@ public class solve extends HttpServlet{
 			map.put(y+"@"+x,w);
 		}
 		int s=Integer.parseInt(request.getParameter("s"));
-		int t=Integer.parseInt(request.getParameter("t"));
 		int par[]=new int[n+1];
 		for(int i=0;i<par.length;i++)
 		{
@@ -85,16 +84,31 @@ public class solve extends HttpServlet{
 				q.add(ind);
 			}
 		}
-		int cost=val[t];
 		
-		String small=t+"";
-		while(par[t]!=t)
+		StringBuilder ans=new StringBuilder();
+		for(int i=1;i<=n;i++)
 		{
-			small=par[t]+"->"+small;
-			t=par[t];
+			StringBuilder kk=new StringBuilder();
+			int xx=i;
+			
+			kk.append(i+" ");
+			while(true)
+			{
+				if(xx<0||xx==par[xx])
+				{
+					break;
+				}
+				xx=par[xx];
+				kk.append(xx+" ");
+				
+			}
+			ans.append("Node "+i+" ->");
+			ans.append("Cost:"+val[i]+"  "+"Path :");
+			ans.append(kk.reverse());
+			ans.append("<br>");
 		}
-		request.setAttribute("ans","COST: "+cost);
-		request.setAttribute("show",small);
+//		request.setAttribute("ans","COST: "+cost);
+		request.setAttribute("ans",ans.toString());
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 	}
 	
