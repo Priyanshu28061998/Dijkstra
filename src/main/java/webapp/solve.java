@@ -17,17 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/solve")
 public class solve extends HttpServlet{
 	
-	static class node
-	{
-		int num;
-		int val;
-		node(int a,int b)
-		{
-			this.num=a;
-			this.val=b;
-		}
-	}
-	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
 	
@@ -40,7 +29,7 @@ public class solve extends HttpServlet{
 			arr.add(temp);
 		}
 		String str[]=request.getParameter("edges").trim().split(" ");
-		if(str.length<m)
+		if(str.length!=3*m)
 		{
 			request.setAttribute("ans","INVALID PARAMETERS");
 			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
@@ -65,14 +54,15 @@ public class solve extends HttpServlet{
 		}
 		par[s]=s;
 		boolean vis[]=new boolean[n+1];
-		vis[s]=true;
 		int val[]=new int[n+1];
 		Arrays.fill(val,Integer.MAX_VALUE);
 		val[s]=0;
 		Queue<Integer> q=new LinkedList<Integer>();
+		q.add(s);
 		while(!q.isEmpty())
 		{
 			int temp=q.remove();
+			vis[temp] = true;
 			for(int j=0;j<arr.get(temp).size();j++)
 			{
 				if(val[temp]+map.get(temp+"@"+arr.get(temp).get(j))<val[arr.get(temp).get(j)])
@@ -90,18 +80,21 @@ public class solve extends HttpServlet{
 					max=val[arr.get(temp).get(j)];
 				}
 			}
-			
 			if(ind!=-1)
 			{
 				q.add(ind);
-				vis[ind]=true;
 			}
 		}
-		for(int i=0;i<val.length;i++)
+		int cost=val[t];
+		
+		String small=t+"";
+		while(par[t]!=t)
 		{
-			System.out.print(i+" "+val[i]+" ");
+			small=par[t]+"->"+small;
+			t=par[t];
 		}
-		request.setAttribute("ans","COST: "+val[t]);
+		request.setAttribute("ans","COST: "+cost);
+		request.setAttribute("show",small);
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 	}
 	

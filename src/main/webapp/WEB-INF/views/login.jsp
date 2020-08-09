@@ -12,5 +12,6 @@
 		<input type="submit" />
 	</form>
  <h1>${ans}</h1>
+ <h1>Path:${show}</h1>
 </body>
 </html>
